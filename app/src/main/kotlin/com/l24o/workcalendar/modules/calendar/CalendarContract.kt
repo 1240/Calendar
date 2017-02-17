@@ -13,12 +13,12 @@ interface ICalendarView : IView {
     fun fillNorms(daysCalendar: Int,
                   daysWork: Int,
                   holidays: Int,
-                  hCount40: Int,
-                  hCount36: Int,
-                  hCount24: Int)
+                  hCount40: Double,
+                  hCount36: Double,
+                  hCount24: Double)
 }
 
 interface ICalendarPresenter : IPresenter<ICalendarView> {
-    fun currentMonthChange(month: Int)
+    fun currentMonthChange(monthNumber: Int)
 }
 

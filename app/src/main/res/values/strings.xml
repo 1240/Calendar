@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">WorkCalendar</string>
     <string name="ok">Ok</string>
+    <string name="norms_work_time">Нормы рабочего времени</string>
+    <string name="count_of_day">Количество дней</string>
+    <string name="norms_count_calendar">Календарных</string>
+    <string name="norms_count_work">Рабочих</string>
+    <string name="norms_count_holyday">Выходных</string>
+    <string name="hours_title">Рабочее время в часах при рабочей неделе</string>
+    <string name="hours_40">40-часовой</string>
+    <string name="hours_36">36-часовой</string>
+    <string name="hours_24">24-часовой</string>
+    <string name="calendar_name_title">Производственный календарь</string>
+    <string name="calendar_name_subtitle">на 2017 год</string>
 </resources>

@@ -8,6 +8,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/bottom_sheet_head_size"
         tools:context="com.l24o.workcalendar.modules.calendar.CalendarActivity">
 
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView

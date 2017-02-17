@@ -30,3 +30,13 @@ fun Date.monthNumber(): Int {
     cal1.time = this
     return cal1.get(Calendar.MONTH)
 }
+
+fun Date.startOfDay(): Date {
+    val cal = Calendar.getInstance()
+    cal.time = this
+    cal.set(Calendar.HOUR_OF_DAY, cal.getMinimum(Calendar.HOUR_OF_DAY));
+    cal.set(Calendar.MINUTE, cal.getMinimum(Calendar.MINUTE));
+    cal.set(Calendar.SECOND, cal.getMinimum(Calendar.SECOND));
+    cal.set(Calendar.MILLISECOND, cal.getMinimum(Calendar.MILLISECOND));
+    return cal.time
+}

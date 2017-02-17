@@ -67,13 +67,13 @@ class CalendarActivity : MvpActivity(), ICalendarView {
         }
     }
 
-    override fun fillNorms(daysCalendar: Int, daysWork: Int, holidays: Int, hCount40: Int, hCount36: Int, hCount24: Int) {
+    override fun fillNorms(daysCalendar: Int, daysWork: Int, holidays: Int, hCount40: Double, hCount36: Double, hCount24: Double) {
         normsCountCalendar.text = daysCalendar.toString()
         normsCountWork.text = daysWork.toString()
         normsCountHoliday.text = holidays.toString()
-        hoursCount40.text = hCount40.toString()
-        hoursCount36.text = hCount36.toString()
-        hoursCount24.text = hCount24.toString()
+        hoursCount40.text = hCount40.toString().format("%.2f")
+        hoursCount36.text = hCount36.toString().format("%.2f")
+        hoursCount24.text = hCount24.toString().format("%.2f")
     }
 
     override fun fillDays(days: List<Day>) {
@@ -108,6 +108,8 @@ class CalendarActivity : MvpActivity(), ICalendarView {
     }
 
     private fun initViews() {
+        supportActionBar?.setTitle(R.string.calendar_name_title)
+        supportActionBar?.setSubtitle(R.string.calendar_name_subtitle)
         val startOfYear = Calendar.getInstance()
         startOfYear.set(Calendar.MONTH, Calendar.JANUARY)
         startOfYear.set(Calendar.DAY_OF_MONTH, 1)
@@ -133,7 +135,8 @@ class CalendarActivity : MvpActivity(), ICalendarView {
         }
 
         bottomSheetHead.onClick {
-            BottomSheetBehavior.from(normsWrapper).state = BottomSheetBehavior.STATE_EXPANDED
+            BottomSheetBehavior.from(normsWrapper).state = if (BottomSheetBehavior.from(normsWrapper).state == BottomSheetBehavior.STATE_EXPANDED)
+                BottomSheetBehavior.STATE_COLLAPSED else BottomSheetBehavior.STATE_EXPANDED
         }
     }
 }
