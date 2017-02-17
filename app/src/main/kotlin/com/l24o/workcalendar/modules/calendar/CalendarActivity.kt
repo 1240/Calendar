@@ -1,6 +1,7 @@
 package com.l24o.workcalendar.modules.calendar
 
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
 import android.support.v4.content.ContextCompat
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
@@ -19,8 +20,10 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import kotlinx.android.synthetic.main.activity_calendar.*
+import kotlinx.android.synthetic.main.bottom_sheet_layout.*
+import kotlinx.android.synthetic.main.calendar_layout.*
 import kotlinx.android.synthetic.main.item_holiday.view.*
+import org.jetbrains.anko.onClick
 import java.util.*
 import javax.inject.Inject
 
@@ -62,6 +65,15 @@ class CalendarActivity : MvpActivity(), ICalendarView {
             }
             holidaysWrapper.addView(view)
         }
+    }
+
+    override fun fillNorms(daysCalendar: Int, daysWork: Int, holidays: Int, hCount40: Int, hCount36: Int, hCount24: Int) {
+        normsCountCalendar.text = daysCalendar.toString()
+        normsCountWork.text = daysWork.toString()
+        normsCountHoliday.text = holidays.toString()
+        hoursCount40.text = hCount40.toString()
+        hoursCount36.text = hCount36.toString()
+        hoursCount24.text = hCount24.toString()
     }
 
     override fun fillDays(days: List<Day>) {
@@ -118,6 +130,10 @@ class CalendarActivity : MvpActivity(), ICalendarView {
                     .setMaximumDate(endOfYear.time)
                     .commit()
             selectionMode = MaterialCalendarView.SELECTION_MODE_NONE
+        }
+
+        bottomSheetHead.onClick {
+            BottomSheetBehavior.from(normsWrapper).state = BottomSheetBehavior.STATE_EXPANDED
         }
     }
 }

@@ -3,6 +3,7 @@ package com.l24o.workcalendar.modules.calendar
 import com.l24o.workcalendar.common.CalendarAssetsManager
 import com.l24o.workcalendar.common.mvp.RxPresenter
 import com.l24o.workcalendar.data.rest.models.Calendar
+import com.l24o.workcalendar.data.rest.models.Day
 import com.l24o.workcalendar.data.rest.models.Holiday
 import com.l24o.workcalendar.extensions.monthNumber
 import com.l24o.workcalendar.extensions.parsedMessage
@@ -19,6 +20,7 @@ class CalendarPresenter @Inject constructor(view: ICalendarView) : RxPresenter<I
 
     private var calendar: Calendar? = null
     private var mapOfHolidays: HashMap<Int, List<Holiday>> = HashMap()
+    private var mapOfDays: HashMap<Int, List<Day>> = HashMap()
     private var currentMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH)
     override fun onViewAttached() {
         super.onViewAttached()
@@ -38,9 +40,13 @@ class CalendarPresenter @Inject constructor(view: ICalendarView) : RxPresenter<I
                 )
     }
 
-    override fun currentMonthChange(month: Int) {
-        currentMonth = month
+    override fun currentMonthChange(monthNumber: Int) {
+        currentMonth = monthNumber
         view?.fillHolidays(mapOfHolidays[currentMonth]?: ArrayList())
+        val month = java.util.Calendar.getInstance()
+        month.set(java.util.Calendar.MONTH, monthNumber)
+        val dayOfMonth = month.getActualMaximum(java.util.Calendar.DAY_OF_MONTH)
+//        view?.fillNorms(dayOfMonth, )
     }
 
     private fun fillData() {
@@ -61,6 +67,18 @@ class CalendarPresenter @Inject constructor(view: ICalendarView) : RxPresenter<I
                     val list = ArrayList<Holiday>()
                     list.add(holiday)
                     mapOfHolidays.put(monthNumber, list)
+                }
+                if (mapOfDays.containsKey(monthNumber)) {
+                    val list = mapOfDays[monthNumber]!!
+                    if (!list.contains(day)) {
+                        (mapOfDays[monthNumber] as ArrayList).add(day)
+                    } else {
+
+                    }
+                } else {
+                    val list = ArrayList<Day>()
+                    list.add(day)
+                    mapOfDays.put(monthNumber, list)
                 }
             }
         }

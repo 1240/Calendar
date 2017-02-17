@@ -10,6 +10,12 @@ interface ICalendarView : IView {
     fun setLoadingVisible(isVisible: Boolean)
     fun fillHolidays(holidays: List<Holiday>)
     fun fillDays(days: List<Day>)
+    fun fillNorms(daysCalendar: Int,
+                  daysWork: Int,
+                  holidays: Int,
+                  hCount40: Int,
+                  hCount36: Int,
+                  hCount24: Int)
 }
 
 interface ICalendarPresenter : IPresenter<ICalendarView> {
