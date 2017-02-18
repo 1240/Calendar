@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WorkCalendar</string>
+    <string name="app_name">Производственный календарь</string>
     <string name="ok">Ok</string>
     <string name="norms_work_time">Нормы рабочего времени</string>
     <string name="count_of_day">Количество дней</string>
