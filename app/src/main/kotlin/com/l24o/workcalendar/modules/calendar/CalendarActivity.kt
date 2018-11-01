@@ -1,143 +1,111 @@
 package com.l24o.workcalendar.modules.calendar
 
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
-import android.support.v4.content.ContextCompat
-import android.text.style.ForegroundColorSpan
-import android.view.LayoutInflater
-import com.l24o.workcalendar.Constants
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.viewpager.widget.ViewPager
 import com.l24o.workcalendar.R
-import com.l24o.workcalendar.common.CurrentDayDecorator
-import com.l24o.workcalendar.common.HighlightWeekendsDecorator
-import com.l24o.workcalendar.common.mvp.MvpActivity
-import com.l24o.workcalendar.data.rest.models.Day
-import com.l24o.workcalendar.data.rest.models.Holiday
-import com.l24o.workcalendar.data.rest.models.TypeOfDay
-import com.l24o.workcalendar.di.AppComponent
-import com.l24o.workcalendar.extensions.isSameDay
-import com.l24o.workcalendar.extensions.toString
-import com.prolificinteractive.materialcalendarview.CalendarDay
-import com.prolificinteractive.materialcalendarview.DayViewDecorator
-import com.prolificinteractive.materialcalendarview.DayViewFacade
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import kotlinx.android.synthetic.main.bottom_sheet_layout.*
-import kotlinx.android.synthetic.main.calendar_layout.*
-import kotlinx.android.synthetic.main.item_holiday.view.*
-import org.jetbrains.anko.onClick
-import java.util.*
-import javax.inject.Inject
+import com.l24o.workcalendar.modules.month.MonthFragment
+import com.l24o.workcalendar.modules.year.YearFragment
+import kotlinx.android.synthetic.main.activity_calendar.*
+import org.threeten.bp.LocalDate
 
 
-class CalendarActivity : MvpActivity(), ICalendarView {
+class CalendarActivity : AppCompatActivity() {
 
-    @Inject lateinit var presenter: ICalendarPresenter
+    private lateinit var viewModel: CalendarViewModel
+    private var pagerAdapter: CalendarPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
+        viewModel = ViewModelProviders.of(this).get(CalendarViewModel::class.java)
+
         initViews()
-        presenter.onViewAttached()
-    }
 
-    override fun resolveDependencies(appComponent: AppComponent) {
-        DaggerCalendarComponent.builder()
-                .appComponent(appComponent)
-                .calendarModule(CalendarModule(this))
-                .build()
-                .inject(this)
-    }
-
-    override fun beforeDestroy() {
-        presenter.dropView()
-    }
-
-    override fun fillHolidays(holidays: List<Holiday>) {
-        holidaysWrapper.removeAllViews()
-        holidays.forEach {
-            val view = LayoutInflater.from(this).inflate(R.layout.item_holiday, null, false)
-            view.apply {
-                if (it.date.size == 1) {
-                    holidayDate.text = it.date.first().toString(Constants.CALENDAR_HOLIDAY_DATE_FORMAT)
-                } else {
-                    holidayDate.text = "c ${it.date.first().toString(Constants.CALENDAR_HOLIDAY_DATE_FORMAT)} по ${it.date.last().toString(Constants.CALENDAR_HOLIDAY_DATE_FORMAT)}"
-                }
-                holidayName.text = it.title
-            }
-            holidaysWrapper.addView(view)
-        }
-    }
-
-    override fun fillNorms(daysCalendar: Int, daysWork: Int, holidays: Int, hCount40: Double, hCount36: Double, hCount24: Double) {
-        normsCountCalendar.text = daysCalendar.toString()
-        normsCountWork.text = daysWork.toString()
-        normsCountHoliday.text = holidays.toString()
-        hoursCount40.text = hCount40.toString().format("%.2f")
-        hoursCount36.text = hCount36.toString().format("%.2f")
-        hoursCount24.text = hCount24.toString().format("%.2f")
-    }
-
-    override fun fillDays(days: List<Day>) {
-        calendarView.addDecorators(
-                object : DayViewDecorator {
-                    override fun decorate(view: DayViewFacade) {
-                        view.setBackgroundDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.circle_drawable_light))
-                    }
-
-                    override fun shouldDecorate(day: CalendarDay): Boolean {
-                        val first = days.firstOrNull { it.day!!.isSameDay(day.date) && it.type == TypeOfDay.SHORT_DAY }
-                        return first != null
-                    }
-
-                },
-                object : DayViewDecorator {
-                    override fun decorate(view: DayViewFacade) {
-                        view.setBackgroundDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.circle_drawable_primary))
-                        view.addSpan(ForegroundColorSpan(ContextCompat.getColor(applicationContext, R.color.colorWhite)))
-                    }
-
-                    override fun shouldDecorate(day: CalendarDay): Boolean {
-                        val first = days.firstOrNull { it.day!!.isSameDay(day.date) && it.type != TypeOfDay.SHORT_DAY }
-                        return first != null
-                    }
-
-                })
-    }
-
-    override fun setLoadingVisible(isVisible: Boolean) {
-
+        viewModel.currentDay.observe(this, Observer {
+            activity_calendar_text_view_today_day.text = it.first
+            activity_calendar_text_view_today_month.text = it.second
+        })
     }
 
     private fun initViews() {
-        supportActionBar?.setTitle(R.string.calendar_name_title)
-        supportActionBar?.setSubtitle(R.string.calendar_name_subtitle)
-        val startOfYear = Calendar.getInstance()
-        startOfYear.set(Calendar.MONTH, Calendar.JANUARY)
-        startOfYear.set(Calendar.DAY_OF_MONTH, 1)
-
-        val endOfYear = Calendar.getInstance()
-        endOfYear.set(Calendar.MONTH, Calendar.DECEMBER)
-        endOfYear.set(Calendar.DAY_OF_MONTH, 31)
-
-        calendarView.apply {
-            setTileHeightDp(32)
-            setOnMonthChangedListener { materialCalendarView, calendarDay ->
-                presenter.currentMonthChange(calendarDay.month)
+        activity_calendar_text_view_month.setOnClickListener {
+            if (!it.isSelected) {
+                activity_calendar_text_view_year.isSelected = false
+                activity_calendar_text_view_month.isSelected = true
+                activity_calendar_container.setCurrentItem(0, true)
             }
-            addDecorators(
-                    HighlightWeekendsDecorator(applicationContext),
-                    CurrentDayDecorator(applicationContext)
-            )
-            state().edit()
-                    .setMinimumDate(startOfYear.time)
-                    .setMaximumDate(endOfYear.time)
-                    .commit()
-            selectionMode = MaterialCalendarView.SELECTION_MODE_NONE
         }
 
-        bottomSheetHead.onClick {
-            BottomSheetBehavior.from(normsWrapper).state = if (BottomSheetBehavior.from(normsWrapper).state == BottomSheetBehavior.STATE_EXPANDED)
-                BottomSheetBehavior.STATE_COLLAPSED else BottomSheetBehavior.STATE_EXPANDED
+        activity_calendar_text_view_year.setOnClickListener {
+            if (!it.isSelected) {
+                activity_calendar_text_view_month.isSelected = false
+                activity_calendar_text_view_year.isSelected = true
+                activity_calendar_container.setCurrentItem(1, true)
+            }
         }
+        activity_calendar_container_today.setOnClickListener {
+            activity_calendar_container.setCurrentItem(0, true)
+            pagerAdapter?.monthFragment?.scrollTo(LocalDate.now().monthValue)
+        }
+        with(activity_calendar_container) {
+            pagerAdapter = CalendarPagerAdapter(supportFragmentManager) {
+                setCurrentItem(it, false)
+            }
+            adapter = pagerAdapter
+            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrollStateChanged(state: Int) {
+                }
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                }
+
+                override fun onPageSelected(position: Int) {
+                    when (position) {
+                        0 -> {
+                            activity_calendar_text_view_year.isSelected = false
+                            activity_calendar_text_view_month.isSelected = true
+                        }
+                        else -> {
+                            activity_calendar_text_view_month.isSelected = false
+                            activity_calendar_text_view_year.isSelected = true
+                        }
+                    }
+                }
+
+            })
+        }
+
+        activity_calendar_text_view_year.isSelected = false
+        activity_calendar_text_view_month.isSelected = true
     }
 }
 
+class CalendarPagerAdapter(
+        fragmentManager: FragmentManager,
+        val setCurrentItem: (Int) -> Unit
+) : FragmentPagerAdapter(fragmentManager) {
+    val monthFragment by lazy { MonthFragment() }
+    val yearFragment by lazy {
+        YearFragment().also {
+            it.onMonthClick = { month: Int ->
+                monthFragment.scrollTo(month)
+                setCurrentItem.invoke(0)
+            }
+        }
+    }
+
+    override fun getItem(position: Int): Fragment {
+        return when (position) {
+            0 -> monthFragment
+            else -> yearFragment
+        }
+    }
+
+    override fun getCount() = 2
+}

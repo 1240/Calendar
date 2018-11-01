@@ -1,18 +1,59 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="titleTextColor">@color/colorWhite</item>
-        <item name="subtitleTextColor">@color/colorWhite</item>
         <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
     </style>
 
-    <style name="AppThemeLight" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorPrimaryDark</item>
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
+    <style name="CalendarHeaderTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/comfortaa_bold</item>
+    </style>
+
+    <style name="WeekdayTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/comfortaa_bold</item>
+    </style>
+
+    <style name="DateTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:fontFamily">@font/comfortaa_regular</item>
+    </style>
+
+    <style name="WeekdayYearTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/comfortaa_bold</item>
+    </style>
+
+    <style name="DateYearTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/comfortaa_regular</item>
+    </style>
+
+
+    <style name="TransparentBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
 
 </resources>

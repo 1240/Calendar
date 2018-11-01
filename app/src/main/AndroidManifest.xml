@@ -10,13 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.l24o.workcalendar.modules.calendar.CalendarActivity">
+            android:name="com.l24o.findmylove.modules.splash.SplashActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.l24o.workcalendar.modules.calendar.CalendarActivity" />
     </application>
 
 </manifest>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rounded_corners_16"
+    android:elevation="8dp">
+
+    <TextView
+        android:id="@+id/item_year_text_view_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa_bold"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Декабрь" />
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/item_year_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_year_text_view_title"
+        app:mcv_arrowColor="@android:color/transparent"
+        app:mcv_dateTextAppearance="@style/DateYearTextAppearance"
+        app:mcv_selectionColor="@color/colorSecondaryText"
+        app:mcv_weekDayTextAppearance="@style/WeekdayYearTextAppearance" />
+
+    <View
+        android:id="@+id/item_year_container_click"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

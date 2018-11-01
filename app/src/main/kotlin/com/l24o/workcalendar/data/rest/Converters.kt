@@ -2,14 +2,11 @@ package com.l24o.workcalendar.data.rest
 
 import com.l24o.workcalendar.Constants
 import com.l24o.workcalendar.data.rest.models.TypeOfDay
-import com.l24o.workcalendar.extensions.toString
 import org.simpleframework.xml.transform.Transform
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import java.text.SimpleDateFormat
 import java.util.*
-
-/**
- * @author Alexander Popov on 15/02/2017.
- */
 
 class TypeOfDayTransformer : Transform<TypeOfDay> {
     override fun read(value: String): TypeOfDay {
@@ -32,13 +29,17 @@ class TypeOfDayTransformer : Transform<TypeOfDay> {
 
 }
 
-class DateTransformer : Transform<Date> {
-    override fun read(value: String): Date {
-        return SimpleDateFormat(Constants.CALENDAR_DAY_FORMAT, Locale.getDefault()).parse(value)
+class LocalDateTransformer(val year: Int) : Transform<LocalDate> {
+    override fun read(value: String): LocalDate {
+        val date = SimpleDateFormat(Constants.CALENDAR_DAY_FORMAT, Locale.getDefault()).parse(value)
+        val cal = Calendar.getInstance().apply {
+            time = date
+        }
+        return LocalDate.of(year, cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH))
     }
 
-    override fun write(value: Date): String {
-        return value.toString(Constants.CALENDAR_DAY_FORMAT)
+    override fun write(value: LocalDate): String {
+        return value.format(DateTimeFormatter.ofPattern(Constants.CALENDAR_DAY_FORMAT))
     }
 
 }

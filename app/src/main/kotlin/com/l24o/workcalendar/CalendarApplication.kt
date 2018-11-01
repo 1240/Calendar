@@ -1,20 +1,19 @@
 package com.l24o.workcalendar
 
-import android.support.multidex.MultiDexApplication
-import com.l24o.workcalendar.di.modules.AppModule
-import com.l24o.workcalendar.di.AppComponent
-import com.l24o.workcalendar.di.DaggerAppComponent
+import android.annotation.SuppressLint
+import android.content.Context
+import androidx.multidex.MultiDexApplication
 
 class CalendarApplication : MultiDexApplication() {
 
-    lateinit var appComponent: AppComponent
-        private set
+    companion object {
+        @SuppressLint("StaticFieldLeak")
+        lateinit var context: Context
+            private set
+    }
 
     override fun onCreate() {
         super.onCreate()
-
-        appComponent = DaggerAppComponent.builder()
-                .appModule(AppModule(this))
-                .build()
+        context = this
     }
 }

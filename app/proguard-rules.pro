@@ -15,3 +15,55 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-dontwarn org.xmlpull.v1.**
+-keep class org.xmlpull.v1.** { *; }
+
+-dontwarn com.bea.xml.stream.**
+-dontwarn org.simpleframework.xml.stream.**
+-keep class org.simpleframework.xml.**{ *; }
+-keepclassmembers,allowobfuscation class * {
+    @org.simpleframework.xml.* <fields>;
+    @org.simpleframework.xml.* <init>(...);
+}
+
+-keepattributes *Annotation*
+-keepclassmembers enum androidx.lifecycle.Lifecycle$Event {
+    <fields>;
+}
+-keep class * implements androidx.lifecycle.LifecycleObserver {
+}
+-keep class * implements androidx.lifecycle.GeneratedAdapter {
+    <init>(...);
+}
+-keepclassmembers class ** {
+    @androidx.lifecycle.OnLifecycleEvent *;
+}
+-keep interface org.simpleframework.xml.core.Label {
+   public *;
+}
+-keep class * implements org.simpleframework.xml.core.Label {
+   public *;
+}
+-keep interface org.simpleframework.xml.core.Parameter {
+   public *;
+}
+-keep class * implements org.simpleframework.xml.core.Parameter {
+   public *;
+}
+-keep interface org.simpleframework.xml.core.Extractor {
+   public *;
+}
+-keep class * implements org.simpleframework.xml.core.Extractor {
+   public *;
+}
+-keep class * implements org.simpleframework.xml.core.Extractor {
+   public *;
+}
+
+-keep class com.l24o.workcalendar.data.rest.** { *; }
+-keep class kotlinx.** { *; }
+-keepnames class kotlinx.** { *; }
+-keep class kotlin.** { *; }
+-keepnames class kotlin.** { *; }
+-keep class io.reactivex.** { *; }
+-keepnames class io.reactivex.** { *; }

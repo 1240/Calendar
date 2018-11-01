@@ -3,13 +3,33 @@
     <string name="ok">Ok</string>
     <string name="norms_work_time">Нормы рабочего времени</string>
     <string name="count_of_day">Количество дней</string>
-    <string name="norms_count_calendar">Календарных</string>
-    <string name="norms_count_work">Рабочих</string>
-    <string name="norms_count_holyday">Выходных</string>
+    <string name="norms_count_calendar">Календарных дней</string>
+    <string name="norms_count_work">Рабочих дней</string>
+    <string name="norms_count_holyday">Выходных/Праздничных дней</string>
     <string name="hours_title">Рабочее время в часах при рабочей неделе</string>
     <string name="hours_40">40-часовой</string>
     <string name="hours_36">36-часовой</string>
     <string name="hours_24">24-часовой</string>
     <string name="calendar_name_title">Производственный календарь</string>
     <string name="calendar_name_subtitle">на 2017 год</string>
+    <string name="holidays">Праздники</string>
+    <string name="no_holidays">Праздников нет</string>
+    <string name="activity_calendar_today">Сегодня</string>
+    <string name="activity_calendar_for_month">Месяц</string>
+    <string name="activity_calendar_for_year">Год</string>
+
+    <string-array name="months">
+        <item>Январь</item>
+        <item>Ферваль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </string-array>
 </resources>

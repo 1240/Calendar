@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorPrimaryLight">#C5CAE9</color>
-    <color name="colorAccent">#03A9F4</color>
-    <color name="colorPrimaryText">#212121</color>
-    <color name="colorSecondaryText">#757575</color>
+    <color name="colorPrimary">#421137</color>
+    <color name="colorPrimaryDark">#360d2b</color>
+    <color name="colorPrimaryLight">#531147</color>
+    <color name="colorAccent">#bd2023</color>
+    <color name="colorPrimaryText">#171c23</color>
+    <color name="colorSecondaryText">#79797a</color>
     <color name="icons">#FFFFFF</color>
+    <color name="colorBackground">#f1f1f2</color>
     <color name="divider">#BDBDBD</color>
+    <color name="colorToday">#421137</color>
 
-    <color name="colorCurrentDate">#757575</color>
+    <color name="colorWeekend">#b3b3b3</color>
     <color name="colorGreen">#106146</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorOrange">#C86534</color>
     <color name="colorOrangeDark">#AA5A36</color>
     <color name="colorRedFailure">#e85451</color>
     <color name="colorYellow">#f7d02e</color>
+
+    <color name="colorPrimary20">#50421137</color>
+    <color name="colorPrimary40">#87421137</color>
+    <color name="colorPrimary60">#b9421137</color>
+    <color name="colorPrimary80">#e7421137</color>
 </resources>

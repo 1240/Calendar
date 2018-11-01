@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="animation_time">400</integer>
+    <integer name="fade_time">@integer/animation_time</integer>
+    <integer name="slide_time">@integer/animation_time</integer>
+</resources>
