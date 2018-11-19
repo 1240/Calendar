@@ -12,12 +12,14 @@ import org.threeten.bp.LocalDate
 
 object CalendarAssetsManager {
 
-    fun calendar(year: Int): Single<Calendar> {
+    fun calendar(): Single<List<Calendar>> {
         return Single.fromCallable {
-            val matcher = RegistryMatcher()
-            matcher.bind(TypeOfDay::class.java, TypeOfDayTransformer())
-            matcher.bind(LocalDate::class.java, LocalDateTransformer(year))
-            Persister(matcher).read(Calendar::class.java, context.assets.open("calendar_$year.xml"))
+            context.assets.list("calendar").map { item ->
+                val matcher = RegistryMatcher()
+                matcher.bind(TypeOfDay::class.java, TypeOfDayTransformer())
+                matcher.bind(LocalDate::class.java, LocalDateTransformer(item.removeSuffix(".xml").toInt()))
+                Persister(matcher).read(Calendar::class.java, context.assets.open("calendar/$item"))
+            }
         }
     }
 

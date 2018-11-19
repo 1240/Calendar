@@ -7,18 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
+import com.jay.widget.StickyHeadersStaggeredGridLayoutManager
 import com.l24o.workcalendar.R
-import com.l24o.workcalendar.extensions.addOffsets
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.ViewHolder
+import com.l24o.workcalendar.extensions.addYearOffsets
 import kotlinx.android.synthetic.main.fragment_year.*
+import org.threeten.bp.LocalDate
 
 class YearFragment : Fragment() {
 
     private lateinit var viewModel: YearViewModel
-    private val monthsAdapter = GroupAdapter<ViewHolder>()
-    var onMonthClick: ((Int) -> Unit)? = null
+    private val monthsAdapter = YearAdapter()
+    var onMonthClick: ((LocalDate) -> Unit)? = null
 
     companion object {
         private const val COLUMN_COUNT = 2
@@ -38,19 +37,20 @@ class YearFragment : Fragment() {
 
     private fun initViews() {
         with(fragment_year_recycler) {
-            layoutManager = GridLayoutManager(context, COLUMN_COUNT)
-            adapter = monthsAdapter
-            addOffsets(
+//            layoutManager = GridLayoutManager(context, COLUMN_COUNT)
+            layoutManager = YearLayoutManager<YearAdapter>(COLUMN_COUNT, StickyHeadersStaggeredGridLayoutManager.VERTICAL)
+            addYearOffsets(
                     offset = resources.getDimensionPixelSize(R.dimen.item_offset),
                     columns = COLUMN_COUNT
             )
+            adapter = monthsAdapter
         }
     }
 
     private fun subscribeEvents() {
         viewModel.itemsEvent.observe(this, Observer(monthsAdapter::update))
         viewModel.itemClickEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it1 -> onMonthClick?.invoke(it1) }
+            it.getContentIfNotHandled()?.let { date -> onMonthClick?.invoke(date) }
         })
     }
 }

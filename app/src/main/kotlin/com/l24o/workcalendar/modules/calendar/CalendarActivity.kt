@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.l24o.workcalendar.R
+import com.l24o.workcalendar.modules.GodObject
 import com.l24o.workcalendar.modules.month.MonthFragment
 import com.l24o.workcalendar.modules.year.YearFragment
 import kotlinx.android.synthetic.main.activity_calendar.*
@@ -51,7 +52,7 @@ class CalendarActivity : AppCompatActivity() {
         }
         activity_calendar_container_today.setOnClickListener {
             activity_calendar_container.setCurrentItem(0, true)
-            pagerAdapter?.monthFragment?.scrollTo(LocalDate.now().monthValue)
+            pagerAdapter?.monthFragment?.scrollToToday()
         }
         with(activity_calendar_container) {
             pagerAdapter = CalendarPagerAdapter(supportFragmentManager) {
@@ -93,7 +94,7 @@ class CalendarPagerAdapter(
     val monthFragment by lazy { MonthFragment() }
     val yearFragment by lazy {
         YearFragment().also {
-            it.onMonthClick = { month: Int ->
+            it.onMonthClick = { month: LocalDate ->
                 monthFragment.scrollTo(month)
                 setCurrentItem.invoke(0)
             }

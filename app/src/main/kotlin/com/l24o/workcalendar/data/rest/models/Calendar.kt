@@ -7,9 +7,6 @@ import org.simpleframework.xml.Root
 import org.threeten.bp.LocalDate
 import java.util.*
 
-/**
- * @author Alexander Popov on 14/02/2017.
- */
 @Root(name = "calendar")
 data class Calendar(
         @field:ElementList(entry = "holidays")

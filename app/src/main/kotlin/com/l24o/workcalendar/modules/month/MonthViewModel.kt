@@ -6,6 +6,7 @@ import com.l24o.findmylove.modules.dialogs.HolidayViewHolder
 import com.l24o.workcalendar.Constants
 import com.l24o.workcalendar.data.rest.models.Holiday
 import com.l24o.workcalendar.modules.GodObject
+import com.l24o.workcalendar.modules.YearWithMonth
 import com.l24o.workcalendar.modules.calendar.ui_model.Norm
 import com.xwray.groupie.Group
 import org.threeten.bp.LocalDate
@@ -18,19 +19,22 @@ class MonthViewModel : BaseViewModel() {
     val fillNormsEvent = MutableLiveData<Norm>()
     val showHolidaysEvent = MutableLiveData<List<Group>>()
 
-    private var currentMonth = LocalDate.now().monthValue
+    private var currentYearWithMonth = YearWithMonth(
+            year = LocalDate.now().year,
+            month = LocalDate.now().monthValue
+    )
 
     init {
         refreshNorms()
     }
 
     fun currentMonthChange(monthNumber: Int) {
-        currentMonth = monthNumber
+        currentYearWithMonth.month = monthNumber
         refreshNorms()
     }
 
     fun onHolidaysClick() {
-        GodObject.mapOfHolidays[currentMonth]?.map {
+        GodObject.mapOfHolidays[currentYearWithMonth]?.map {
             HolidayViewHolder(
                     title = it.title,
                     date = if (it.date.size == 1) {
@@ -46,17 +50,17 @@ class MonthViewModel : BaseViewModel() {
     }
 
     private fun refreshNorms() {
-        fillHolidaysEvent.value = GodObject.mapOfHolidays[currentMonth] ?: ArrayList()
-        val date = LocalDate.now().withMonth(currentMonth)
+        fillHolidaysEvent.value = GodObject.mapOfHolidays[currentYearWithMonth] ?: ArrayList()
+        val date = LocalDate.now().withYear(currentYearWithMonth.year).withMonth(currentYearWithMonth.month)
         val dayOfMonth = date.lengthOfMonth()
-        GodObject.mapOfHolidates[currentMonth]?.let {
+        GodObject.mapOfHolidates[currentYearWithMonth]?.let {
             val workDaysCount = dayOfMonth - it.size
             fillNormsEvent.value = Norm(dayOfMonth, workDaysCount, it.size,
-                    workDaysCount * 40.0 / 5 - (GodObject.mapOfShortDates[currentMonth]?.size
+                    workDaysCount * 40.0 / 5 - (GodObject.mapOfShortDates[currentYearWithMonth]?.size
                             ?: 0),
-                    workDaysCount * 36.0 / 5 - (GodObject.mapOfShortDates[currentMonth]?.size
+                    workDaysCount * 36.0 / 5 - (GodObject.mapOfShortDates[currentYearWithMonth]?.size
                             ?: 0),
-                    workDaysCount * 24.0 / 5 - (GodObject.mapOfShortDates[currentMonth]?.size
+                    workDaysCount * 24.0 / 5 - (GodObject.mapOfShortDates[currentYearWithMonth]?.size
                             ?: 0)
             )
         }

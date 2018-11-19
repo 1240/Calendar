@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.l24o.findmylove.base.BaseDialogFragment
 import com.l24o.workcalendar.R
-import com.l24o.workcalendar.extensions.addOffsets
 import com.xwray.groupie.Group
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder

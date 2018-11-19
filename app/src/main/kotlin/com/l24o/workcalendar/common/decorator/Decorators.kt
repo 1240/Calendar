@@ -1,16 +1,12 @@
 package com.l24o.workcalendar.common.decorator
 
 import android.content.Context
-import android.graphics.Typeface
 import android.text.style.ForegroundColorSpan
-import android.text.style.RelativeSizeSpan
-import android.text.style.StyleSpan
 import androidx.core.content.ContextCompat
 import com.l24o.workcalendar.R
 import com.l24o.workcalendar.data.rest.models.Day
 import com.l24o.workcalendar.data.rest.models.TypeOfDay
 import com.l24o.workcalendar.extensions.isSameDay
-import com.l24o.workcalendar.extensions.isToday
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade

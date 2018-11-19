@@ -14,9 +14,10 @@ fun Date.toString(format: String): String {
 }
 
 fun LocalDate.isSameDay(date: LocalDate): Boolean {
-    return this.dayOfYear == date.dayOfYear
+    return this.year == date.year && this.dayOfYear == date.dayOfYear
 }
 
 fun LocalDate.isToday(): Boolean {
-    return this.dayOfYear == LocalDate.now().dayOfYear
+    val localDate = LocalDate.now()
+    return this.year == localDate.year && this.dayOfYear == localDate.dayOfYear
 }

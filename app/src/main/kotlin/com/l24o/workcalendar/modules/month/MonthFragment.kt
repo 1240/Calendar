@@ -10,7 +10,7 @@ import com.l24o.findmylove.modules.dialogs.HolidaysListDialogFragment
 import com.l24o.workcalendar.R
 import com.l24o.workcalendar.common.decorator.*
 import com.l24o.workcalendar.data.rest.models.Holiday
-import com.l24o.workcalendar.modules.GodObject.calendar
+import com.l24o.workcalendar.modules.GodObject
 import com.l24o.workcalendar.modules.calendar.ui_model.Norm
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -71,9 +71,8 @@ class MonthFragment : Fragment() {
     }
 
     private fun initViews() {
-        val now = LocalDate.now()
-        val startOfYear = LocalDate.ofYearDay(now.year, 1)
-        val endOfYear = LocalDate.ofYearDay(now.year, now.lengthOfYear())
+        val startOfYear = LocalDate.ofYearDay(GodObject.minYear, 1)
+        val endOfYear = LocalDate.ofYearDay(GodObject.maxYear, LocalDate.now().withYear(GodObject.maxYear).lengthOfYear())
 
         calendarView.apply {
             setTileHeightDp(32)
@@ -85,11 +84,11 @@ class MonthFragment : Fragment() {
             addDecorators(
                     CurrentDayDecorator(context),
                     HighlightWeekendsDecorator(context),
-                    HoliDayDecorator(context, calendar.days),
-                    ShortDayDecorator(context, calendar.days),
+                    HoliDayDecorator(context, GodObject.days),
+                    ShortDayDecorator(context, GodObject.days),
                     HighlightWeekendsDecoratorWithToday(context),
-                    HoliDayDecoratorWithToday(context, calendar.days),
-                    ShortDayDecoratorWithToday(context, calendar.days)
+                    HoliDayDecoratorWithToday(context, GodObject.days),
+                    ShortDayDecoratorWithToday(context, GodObject.days)
             )
             state().edit()
                     .setMinimumDate(startOfYear)
@@ -103,8 +102,12 @@ class MonthFragment : Fragment() {
         }
     }
 
-    fun scrollTo(month: Int) {
-        calendarView?.currentDate = CalendarDay.from(LocalDate.now().withMonth(month))
+    fun scrollTo(localDate: LocalDate) {
+        calendarView?.currentDate = CalendarDay.from(localDate)
+    }
+
+    fun scrollToToday() {
+        calendarView?.currentDate = CalendarDay.from(LocalDate.now())
     }
 
 }
