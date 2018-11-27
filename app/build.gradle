@@ -7,9 +7,9 @@ android {
     signingConfigs {
         release {
             keyAlias 'workcalendar'
-            keyPassword '_dec0d3d'
-            storeFile file('/Users/aleksandrpopov/Downloads/Telegram Desktop/WorkCalendar.jks')
-            storePassword '_dec0d3d'
+            keyPassword 'deadbeefdead'
+            storeFile file('pathtofile')
+            storePassword 'deadbeefdead'
         }
     }
     compileSdkVersion 28
